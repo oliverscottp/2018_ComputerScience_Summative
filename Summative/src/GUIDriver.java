@@ -61,9 +61,9 @@ public class GUIDriver extends Application{
 		
 		
 		
-		HBox nameAndAmt = new HBox();
-		nameAndAmt.getChildren().add(currentStockName);
-		nameAndAmt.getChildren().add(amtOfStockOwned);
+		BorderPane nameAndAmt = new BorderPane();
+		nameAndAmt.setLeft(currentStockName);
+		nameAndAmt.setRight(amtOfStockOwned);
 		
 		stockPane.setTop(nameAndAmt);
 		pane.setCenter(stockPane);
@@ -132,7 +132,8 @@ public class GUIDriver extends Application{
 	private void generateStockButtons(){
 		for(int i = 0 ; i < stockButtons.length ; i ++){
 			stockButtons[i] = new Button();
-			stockButtons[i].setText(portfolio.getStockName(i) +"\n" + portfolio.stocks[i].getPrice() +"$");
+			stockButtons[i].setText(portfolio.getStockName(i) +"\n" + portfolio.stocks[i].getPrice() +"$"
+					+"\nOwned : "+String.valueOf(portfolio.numOfStock[i]));
 			stockButtons[i].setMinWidth(150);
 			stockButtons[i].setAlignment(Pos.BASELINE_LEFT);
 			int j = i;
@@ -152,7 +153,7 @@ public class GUIDriver extends Application{
 		money.setText(String.valueOf(portfolio.getMoney())); 
 		totalValue.setText(String.valueOf(portfolio.totalWorth()));
 		currentStockName.setText(portfolio.getStockName(currentSelectedStock));
-		amtOfStockOwned.setText(String.valueOf(portfolio.numOfStock[currentSelectedStock]));
+		amtOfStockOwned.setText("Stock Owned : " + String.valueOf(portfolio.numOfStock[currentSelectedStock]));
 	}
 	
 }
