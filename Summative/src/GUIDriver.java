@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class GUIDriver extends Application{
@@ -37,6 +38,8 @@ public class GUIDriver extends Application{
 	Text amtOfStockOwned = new Text();
 
 	
+	Button nxtDay = new Button("Next day");
+
 	
 	//The index of the currently selected stock
 	int currentSelectedStock;
@@ -58,6 +61,17 @@ public class GUIDriver extends Application{
 		infoPane.add(totalValue, 1, 1);
 		topPane.setRight(infoPane);
 		pane.setTop(topPane);
+		
+		
+		nxtDay.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {	
+				portfolio.goToNextDay();
+				regenerateEverything();
+			}
+		});
+		
+		pane.setBottom(nxtDay);
 		
 		
 		

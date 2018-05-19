@@ -4,9 +4,11 @@ public class Stock {
 	
 	private Industry industry;
 	private double price;
-	private double[][] priceHistory = new double[2][25];
+	private double[] priceHistory = new double[25];
+	private int day;
 	
 	public Stock(String name, Industry industry){
+		day = 0;
 		this.name = name;
 		this.industry = industry;
 		originalPrice();
@@ -18,6 +20,15 @@ public class Stock {
 	
 	public void changePrice(double newPrice){
 		price = newPrice;
+	}
+	
+	public void updatePrice(){
+		priceHistory[day] = price;
+		price = price * ((Math.random() * 10 + 95)/100);
+		day++;
+		for(int i = 0 ; i < 25 ; i++){
+			System.out.println(priceHistory[i]);
+		}
 	}
 	
 	public double getPrice(){

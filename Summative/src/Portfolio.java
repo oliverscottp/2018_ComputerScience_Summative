@@ -65,6 +65,13 @@ public class Portfolio {
 
 		}
 	}
+	
+	
+	public void goToNextDay(){
+		for(int i = 0 ; i < stocks.length ; i++){
+			stocks[i].updatePrice();
+		}
+	}
 
 	/**
 	 * Returns stock name given the stock index number
