@@ -37,7 +37,7 @@ public class GUIDriver extends Application{
 	Text currentStockName = new Text();
 	Text amtOfStockOwned = new Text();
 
-	
+	//Button to go to the next day
 	Button nxtDay = new Button("Next day");
 
 	
