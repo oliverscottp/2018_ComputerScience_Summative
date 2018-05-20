@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Portfolio {
 	int numOfDifferentStocks = 10;
@@ -5,7 +6,6 @@ public class Portfolio {
 	public int[] numOfStock = new int[numOfDifferentStocks];
 	private double money;
 
-	
 	public Portfolio(double startingMoney) {
 		money = startingMoney;
 		generateStocks();
@@ -33,9 +33,13 @@ public class Portfolio {
 
 	/**
 	 * Buys the given number of stock at the given price
-	 * @param stockNum	The stock index number
-	 * @param amtOfStock	The amount of stock they want to buy
-	 * @return	Returns "Stock bought" if they have enough money, returns "invalid" if they dont.
+	 * 
+	 * @param stockNum
+	 *            The stock index number
+	 * @param amtOfStock
+	 *            The amount of stock they want to buy
+	 * @return Returns "Stock bought" if they have enough money, returns
+	 *         "invalid" if they dont.
 	 */
 	public String buyStock(int stockNum, int amtOfStock) {
 		if (stocks[stockNum].getPrice() * amtOfStock > money) {
@@ -51,9 +55,13 @@ public class Portfolio {
 
 	/**
 	 * Sells the given amount of stock at the stocks price
-	 * @param stockNum	The stock index number
-	 * @param amtOfStock	The amount of stock they want to sell
-	 * @return	Returns sold if they have enough stock, returns invalid amount if they dont have enough
+	 * 
+	 * @param stockNum
+	 *            The stock index number
+	 * @param amtOfStock
+	 *            The amount of stock they want to sell
+	 * @return Returns sold if they have enough stock, returns invalid amount if
+	 *         they dont have enough
 	 */
 	public String sellStock(int stockNum, int amtOfStock) {
 		if (numOfStock[stockNum] < amtOfStock) {
@@ -65,18 +73,28 @@ public class Portfolio {
 
 		}
 	}
-	
-	
-	public void goToNextDay(){
-		for(int i = 0 ; i < stocks.length ; i++){
-			stocks[i].updatePrice();
+
+	public String[] goToNextDay() {
+		ArrayList<String> messages = new ArrayList<String>();
+		for (int i = 0; i < stocks.length; i++) {
+			String temp = stocks[i].updatePrice();
+			if (temp != null) {
+				messages.add(temp);
+			}
 		}
+
+		String[] messageArray = new String[messages.size()];
+		messages.toArray(messageArray);
+		
+		return messageArray;
 	}
 
 	/**
 	 * Returns stock name given the stock index number
-	 * @param stockNumber	The index number for the stock in the array
-	 * @return	The string (name) associated with the stock
+	 * 
+	 * @param stockNumber
+	 *            The index number for the stock in the array
+	 * @return The string (name) associated with the stock
 	 */
 	public String getStockName(int stockNumber) {
 		return stocks[stockNumber].getName();
@@ -91,15 +109,19 @@ public class Portfolio {
 		double roundMoney = Math.round(money * 100.0) / 100.0;
 		return roundMoney;
 	}
-	
-	public double totalWorth(){
+
+	public double getPriceAtDate(int stockIndex, int day) {
+		return stocks[stockIndex].priceHistory[day];
+	}
+
+	public double totalWorth() {
 		double rounded = money;
-		
-		for(int i = 0 ; i < numOfStock.length ; i++){
-			rounded+=stocks[i].getPrice() * numOfStock[i];
+
+		for (int i = 0; i < numOfStock.length; i++) {
+			rounded += stocks[i].getPrice() * numOfStock[i];
 		}
 		rounded = Math.round(rounded * 100.0) / 100.0;
 		return rounded;
-				
+
 	}
 }
