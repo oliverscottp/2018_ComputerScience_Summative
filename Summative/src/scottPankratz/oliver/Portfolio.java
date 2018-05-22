@@ -1,3 +1,5 @@
+package scottPankratz.oliver;
+
 import java.util.ArrayList;
 
 public class Portfolio {
@@ -20,7 +22,7 @@ public class Portfolio {
 	private void generateStocks() {
 		stocks[0] = new Stock("Bepis Cola Inc", Industry.FOOD);
 		stocks[1] = new Stock("Appricot Computing", Industry.TECH);
-		stocks[2] = new Stock("Doratus Chips", Industry.FOOD);
+		stocks[2] = new Stock("Boblaws", Industry.FOOD);
 		stocks[3] = new Stock("Ikua Furniture", Industry.FURNITURE);
 		stocks[4] = new Stock("American Beagle", Industry.CLOTHING);
 		stocks[5] = new Stock("Ubysoft", Industry.VIDEOGAMES);
