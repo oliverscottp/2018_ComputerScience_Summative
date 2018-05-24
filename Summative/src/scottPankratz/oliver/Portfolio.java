@@ -4,9 +4,12 @@ import java.util.ArrayList;
 
 public class Portfolio {
 	int numOfDifferentStocks = 10;
+	
 	public Stock[] stocks = new Stock[numOfDifferentStocks];
 	public int[] numOfStock = new int[numOfDifferentStocks];
+	
 	private double money;
+	private int day = 0;
 
 	public Portfolio(double startingMoney) {
 		money = startingMoney;
@@ -79,11 +82,12 @@ public class Portfolio {
 	public String[] goToNextDay() {
 		ArrayList<String> messages = new ArrayList<String>();
 		for (int i = 0; i < stocks.length; i++) {
-			String temp = stocks[i].updatePrice();
+			String temp = stocks[i].updatePrice(day);
 			if (temp != null) {
 				messages.add(temp);
 			}
 		}
+		day++;
 
 		String[] messageArray = new String[messages.size()];
 		messages.toArray(messageArray);
