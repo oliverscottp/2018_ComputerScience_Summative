@@ -3,13 +3,10 @@ package scottPankratz.oliver;
 import java.util.ArrayList;
 
 public class Portfolio {
-	int numOfDifferentStocks = 10;
-	
-	public Stock[] stocks = new Stock[numOfDifferentStocks];
-	public int[] numOfStock = new int[numOfDifferentStocks];
-	
+	static int numOfDifferentStocks = 10;
+	private static Stock[] stocks = new Stock[numOfDifferentStocks];
+	private int[] numOfStock = new int[numOfDifferentStocks];
 	private double money;
-	private int day = 0;
 
 	public Portfolio(double startingMoney) {
 		money = startingMoney;
@@ -82,12 +79,11 @@ public class Portfolio {
 	public String[] goToNextDay() {
 		ArrayList<String> messages = new ArrayList<String>();
 		for (int i = 0; i < stocks.length; i++) {
-			String temp = stocks[i].updatePrice(day);
+			String temp = stocks[i].updatePrice();
 			if (temp != null) {
 				messages.add(temp);
 			}
 		}
-		day++;
 
 		String[] messageArray = new String[messages.size()];
 		messages.toArray(messageArray);
@@ -116,10 +112,20 @@ public class Portfolio {
 		return roundMoney;
 	}
 
+	/**
+	 * gets the price of a given stock at a given date
+	 * @param stockIndex	the index of the stock
+	 * @param day	the day you want the price
+	 * @return	The price of the stock at that day
+	 */
 	public double getPriceAtDate(int stockIndex, int day) {
-		return stocks[stockIndex].priceHistory[day];
+		return stocks[stockIndex].getPriceAtDay(day);
 	}
 
+	/**
+	 * calculates the total worth of the account, which includes money and the value of all stocks owned
+	 * @return
+	 */
 	public double totalWorth() {
 		double rounded = money;
 
@@ -129,5 +135,39 @@ public class Portfolio {
 		rounded = Math.round(rounded * 100.0) / 100.0;
 		return rounded;
 
+	}
+	
+	/**
+	 * gets the stocks current price
+	 * @param i	the index of the desired stock
+	 * @return	The current price of the stock
+	 */
+	public double getPrice(int i) {
+		return stocks[i].getPrice();
+	}
+	
+	/**
+	 * gets the number of stock owned
+	 * @param i		the index of the stock
+	 * @return	The number of stock that is owned
+	 */
+	public int getNumberOfStock(int i) {
+		return numOfStock[i];
+	}
+	
+	/**
+	 * sets the trend for all stocks in a desired industry
+	 * @param trend		the trend of the stock (+ or - a decimal) to make the stock have a higher chance of going up or down
+	 * @param ind		the industry to set the trend for all desired stock
+	 * @param days		the number of days the trend will last for
+	 * @param endOfTrendPriceChange		an up or down price change that the stock will get at the end of the trend
+	 * @param exclude	the string of any stock in the industry to not include
+	 */
+	public static void setStockTrendByIndustry(double trend, Industry ind, int days, double endOfTrendPriceChange,String exclude) {
+		for(int i = 0; i < stocks.length; i++) {
+			if(stocks[i].getIndustry() == ind && stocks[i].getName() != exclude && stocks[i].eventHappening() == false) {
+				stocks[i].setTrend(trend, days,endOfTrendPriceChange);
+			}
+		}
 	}
 }
