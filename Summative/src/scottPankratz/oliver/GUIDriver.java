@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
 public class GUIDriver extends Application {
 	
-	public static int maxDays = 500;
+	public static int maxDays = 50;
 	
 	private Button[] stockButtons = new Button[10];
 	private Portfolio portfolio = new Portfolio(10000);
@@ -62,6 +62,9 @@ public class GUIDriver extends Application {
 		launch(args);
 	}
 
+	/**
+	 * handles the placement of all buttons and labels and handles their functions
+	 */
 	public void start(Stage window) throws Exception {
 
 		regenerateEverything();
@@ -79,7 +82,12 @@ public class GUIDriver extends Application {
 		topPane.setRight(infoPane);
 		pane.setTop(topPane);
 
+		Text news = new Text("News : ");
+		news.setFont(Font.font(30));
+		
+		nxtDay.setFont(Font.font(30));
 		newsBox.getChildren().add(nxtDay);
+		newsBox.getChildren().add(news);
 		nxtDay.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -89,8 +97,12 @@ public class GUIDriver extends Application {
 					currentDay++;
 					regenerateEverything();
 				
+					
+					
 					newsBox = new HBox(15);
+					
 					newsBox.getChildren().add(nxtDay);
+					newsBox.getChildren().add(news);
 					
 					Text[] messagesText = new Text[messages.length];
 					for(int i = 0 ; i < messages.length ; i++){
@@ -168,16 +180,24 @@ public class GUIDriver extends Application {
 
 		Scene scene = new Scene(pane, 1250, 750);
 
+		
+		
+	
+		
+		
 		window.setTitle("Stock Game");
 		window.setScene(scene);
 		window.show();
 	}
 
+	/**
+	 * generates all the stock buttons to have the name, price and the number owned
+	 */
 	private void generateStockButtons() {
 		for (int i = 0; i < stockButtons.length; i++) {
 			stockButtons[i] = new Button();
-			stockButtons[i].setText(portfolio.getStockName(i) + "\n" + portfolio.stocks[i].getPrice() + "$"
-					+ "\nOwned : " + String.valueOf(portfolio.numOfStock[i]));
+			stockButtons[i].setText(portfolio.getStockName(i) + "\n" + portfolio.getPrice(i) + "$"
+					+ "\nOwned : " + String.valueOf(portfolio.getNumberOfStock(i)));
 			stockButtons[i].setMinWidth(150);
 			stockButtons[i].setAlignment(Pos.BASELINE_LEFT);
 			int j = i;
@@ -200,7 +220,7 @@ public class GUIDriver extends Application {
 		money.setText(String.valueOf(portfolio.getMoney()));
 		totalValue.setText(String.valueOf(portfolio.totalWorth()));
 		currentStockName.setText(portfolio.getStockName(currentSelectedStock));
-		amtOfStockOwned.setText("Stock Owned : " + String.valueOf(portfolio.numOfStock[currentSelectedStock]));
+		amtOfStockOwned.setText("Stock Owned : " + String.valueOf(portfolio.getNumberOfStock(currentSelectedStock)));
 
 		NumberAxis xAxis = new NumberAxis(1, currentDay+1, 1);
 		
