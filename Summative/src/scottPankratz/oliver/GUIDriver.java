@@ -1,5 +1,7 @@
 package scottPankratz.oliver;
 
+import javax.swing.GroupLayout.Alignment;
+
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,7 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-//TEST
+
 public class GUIDriver extends Application {
 	
 	public static int maxDays = 50;
@@ -182,14 +184,39 @@ public class GUIDriver extends Application {
 
 		
 		
+		
+		
+		
+		//The start menu
+		BorderPane mainMenu = new BorderPane();
+		Button startButton = new Button("Start Game");
+		startButton.setFont(Font.font(50));
+		startButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				window.setScene(scene);
+
+			}
+		});
+		
+		Text startText = new Text("How much can you make in "+ maxDays+" days?");
+		startText.setFont(Font.font(50));
+		
+		mainMenu.setTop(startText);
+		mainMenu.setAlignment(startText, Pos.CENTER);
 	
+
+		
+		mainMenu.setCenter(startButton);
+		
+		Scene menu = new Scene(mainMenu,1250,750);
 		
 		
 		window.setTitle("Stock Game");
-		window.setScene(scene);
+		window.setScene(menu);
 		window.show();
 	}
-
+		
 	/**
 	 * generates all the stock buttons to have the name, price and the number owned
 	 */
@@ -232,8 +259,10 @@ public class GUIDriver extends Application {
 		LineChart<Number, Number> lineChart = new LineChart<Number, Number>(xAxis, yAxis);
 
 		lineChart.setTitle(currentStockName.getText());
+		lineChart.setLegendVisible(false);
 		// defining a series
 		XYChart.Series series = new XYChart.Series();
+		
 
 		// populating the series with data
 		for (int i = 0; i < currentDay+1; i++) {
