@@ -61,6 +61,11 @@ public class Stock {
 		this.trend = trend;
 		daysOfTrend = days;
 	}
+	
+	public void subtractTrendDay(){
+		if(daysOfTrend >=1)
+			daysOfTrend--;
+	}
 
 	/**
 	 * updates the price for the next day. Events may happen which change the price
@@ -109,7 +114,7 @@ public class Stock {
 				returnString = "A murderer is diguising them self as a " + name + "\nemployee, be careful";
 				endOfTrendMessage = "The murderer has been caught\n" + name
 						+ " has compensated all the families effected";
-				endOfTrendPriceChange = 0.15;
+				endOfTrendPriceChange = 0.17;
 				trend = -0.045;
 				int numDays = r.nextInt(8) + 4;
 				daysOfTrend = numDays;
@@ -118,10 +123,11 @@ public class Stock {
 			} else if (industry == Industry.VIDEOGAMES) {
 				returnString = "A new study has come out showing\na strong link between\nvideogames and animal torture";
 				endOfTrendMessage = "The videogame study has\nbeen proven false";
-				endOfTrendPriceChange = 0.17;
+				endOfTrendPriceChange =0.17;
+				System.out.println("CALLED BY " + name);
 				trend = -0.04;
 				int numDays = r.nextInt(15) + 2;
-				Portfolio.setStockTrendByIndustry(-0.04, Industry.VIDEOGAMES, numDays, 0.17, null);
+				Portfolio.setStockTrendByIndustry(-0.04, Industry.VIDEOGAMES, numDays,0.17, null);
 			}
 		}
 
@@ -132,15 +138,15 @@ public class Stock {
 		 * Industry.FURNITURE) }
 		 */
 
-		if (daysOfTrend >= 1) {
-			daysOfTrend--;
-			if (daysOfTrend == 0) {
+		if (daysOfTrend ==1) {
+			
+			//if (daysOfTrend == 0) {
 				trend = 0;
 				returnString = endOfTrendMessage;
 				endOfTrendMessage = null;
 				price *= 1 + endOfTrendPriceChange;
 				endOfTrendPriceChange = 0;
-			}
+			//}
 		}
 
 		day++;
@@ -149,6 +155,8 @@ public class Stock {
 			priceHistory[day] = price;
 		}
 
+		System.out.println(name + " days of trend " + daysOfTrend + " trend : " + trend);
+		
 		return returnString;
 	}
 

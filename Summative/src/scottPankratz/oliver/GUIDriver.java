@@ -23,9 +23,9 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class GUIDriver extends Application {
-	
+
 	public static int maxDays = 50;
-	
+
 	private Button[] stockButtons = new Button[10];
 	private Portfolio portfolio = new Portfolio(10000);
 
@@ -47,10 +47,8 @@ public class GUIDriver extends Application {
 	private Text currentStockName = new Text();
 	private Text amtOfStockOwned = new Text();
 
-	
-	
 	private HBox newsBox = new HBox(15);
-	
+
 	// Button to go to the next day
 	private Button nxtDay = new Button("Next day");
 
@@ -58,14 +56,14 @@ public class GUIDriver extends Application {
 	private int currentSelectedStock;
 
 	private int currentDay = 0;
-	
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 
 	/**
-	 * handles the placement of all buttons and labels and handles their functions
+	 * handles the placement of all buttons and labels and handles their
+	 * functions
 	 */
 	public void start(Stage window) throws Exception {
 
@@ -75,7 +73,7 @@ public class GUIDriver extends Application {
 		// Top of main pane
 		titleText.setText("Stock Game");
 		titleText.setFont(Font.font(60));
-		
+
 		topPane.setLeft(titleText);
 		infoPane.add(new Text("Money : "), 0, 0);
 		infoPane.add(money, 1, 0);
@@ -86,39 +84,37 @@ public class GUIDriver extends Application {
 
 		Text news = new Text("News : ");
 		news.setFont(Font.font(30));
-		
+
 		nxtDay.setFont(Font.font(30));
 		newsBox.getChildren().add(nxtDay);
 		newsBox.getChildren().add(news);
 		nxtDay.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				if (currentDay < maxDays-1) {
-					
+				if (currentDay < maxDays - 1) {
+
 					String[] messages = portfolio.goToNextDay();
 					currentDay++;
 					regenerateEverything();
-				
-					
-					
+
 					newsBox = new HBox(15);
-					
+
 					newsBox.getChildren().add(nxtDay);
 					newsBox.getChildren().add(news);
-					
+
 					Text[] messagesText = new Text[messages.length];
-					for(int i = 0 ; i < messages.length ; i++){
+					for (int i = 0; i < messages.length; i++) {
 						messagesText[i] = new Text();
 						messagesText[i].maxWidth(30);
 						messagesText[i].setText(messages[i]);
 						newsBox.getChildren().add(messagesText[i]);
 					}
 					pane.setBottom(newsBox);
-					
+
 				}
 			}
 		});
-		
+
 		pane.setBottom(newsBox);
 
 		BorderPane nameAndAmt = new BorderPane();
@@ -157,7 +153,9 @@ public class GUIDriver extends Application {
 		buyButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				portfolio.buyStock(currentSelectedStock, Integer.valueOf(buyAmt.getText()));
+				if (buyAmt.getText().trim().isEmpty() == false) {
+					portfolio.buyStock(currentSelectedStock, Integer.valueOf(buyAmt.getText()));
+				}
 				regenerateEverything();
 
 			}
@@ -166,7 +164,9 @@ public class GUIDriver extends Application {
 		sellButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				portfolio.sellStock(currentSelectedStock, Integer.valueOf(sellAmt.getText()));
+				if (sellAmt.getText().trim().isEmpty() == false) {
+					portfolio.sellStock(currentSelectedStock, Integer.valueOf(sellAmt.getText()));
+				}
 				regenerateEverything();
 
 			}
@@ -182,12 +182,7 @@ public class GUIDriver extends Application {
 
 		Scene scene = new Scene(pane, 1250, 750);
 
-		
-		
-		
-		
-		
-		//The start menu
+		// The start menu
 		BorderPane mainMenu = new BorderPane();
 		Button startButton = new Button("Start Game");
 		startButton.setFont(Font.font(50));
@@ -198,33 +193,31 @@ public class GUIDriver extends Application {
 
 			}
 		});
-		
-		Text startText = new Text("How much can you make in "+ maxDays+" days?");
+
+		Text startText = new Text("How much can you make in " + maxDays + " days?");
 		startText.setFont(Font.font(50));
-		
+
 		mainMenu.setTop(startText);
 		mainMenu.setAlignment(startText, Pos.CENTER);
-	
 
-		
 		mainMenu.setCenter(startButton);
-		
-		Scene menu = new Scene(mainMenu,1250,750);
-		
-		
+
+		Scene menu = new Scene(mainMenu, 1250, 750);
+
 		window.setTitle("Stock Game");
 		window.setScene(menu);
 		window.show();
 	}
-		
+
 	/**
-	 * generates all the stock buttons to have the name, price and the number owned
+	 * generates all the stock buttons to have the name, price and the number
+	 * owned
 	 */
 	private void generateStockButtons() {
 		for (int i = 0; i < stockButtons.length; i++) {
 			stockButtons[i] = new Button();
-			stockButtons[i].setText(portfolio.getStockName(i) + "\n" + portfolio.getPrice(i) + "$"
-					+ "\nOwned : " + String.valueOf(portfolio.getNumberOfStock(i)));
+			stockButtons[i].setText(portfolio.getStockName(i) + "\n" + portfolio.getPrice(i) + "$" + "\nOwned : "
+					+ String.valueOf(portfolio.getNumberOfStock(i)));
 			stockButtons[i].setMinWidth(150);
 			stockButtons[i].setAlignment(Pos.BASELINE_LEFT);
 			int j = i;
@@ -249,9 +242,8 @@ public class GUIDriver extends Application {
 		currentStockName.setText(portfolio.getStockName(currentSelectedStock));
 		amtOfStockOwned.setText("Stock Owned : " + String.valueOf(portfolio.getNumberOfStock(currentSelectedStock)));
 
-		NumberAxis xAxis = new NumberAxis(1, currentDay+1, 1);
-		
-		
+		NumberAxis xAxis = new NumberAxis(1, currentDay + 1, 1);
+
 		NumberAxis yAxis = new NumberAxis();
 		xAxis.setLabel("Days");
 		yAxis.setLabel("Value");
@@ -262,10 +254,9 @@ public class GUIDriver extends Application {
 		lineChart.setLegendVisible(false);
 		// defining a series
 		XYChart.Series series = new XYChart.Series();
-		
 
 		// populating the series with data
-		for (int i = 0; i < currentDay+1; i++) {
+		for (int i = 0; i < currentDay + 1; i++) {
 			series.getData().add(new XYChart.Data(i + 1, portfolio.getPriceAtDate(currentSelectedStock, i)));
 		}
 

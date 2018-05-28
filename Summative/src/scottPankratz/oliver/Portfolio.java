@@ -20,16 +20,16 @@ public class Portfolio {
 	 * generates all the names and industries of the 10 stocks.
 	 */
 	private void generateStocks() {
-		stocks[0] = new Stock("Bepis Cola Inc", Industry.FOOD);
-		stocks[1] = new Stock("Appricot Computing", Industry.TECH);
-		stocks[2] = new Stock("Boblaws", Industry.FOOD);
-		stocks[3] = new Stock("Ikua Furniture", Industry.FURNITURE);
-		stocks[4] = new Stock("American Beagle", Industry.CLOTHING);
-		stocks[5] = new Stock("Ubysoft", Industry.VIDEOGAMES);
-		stocks[6] = new Stock("Fedecks", Industry.DELIVERY);
-		stocks[7] = new Stock("Ubber", Industry.TECH);
-		stocks[8] = new Stock("Nintenbo", Industry.VIDEOGAMES);
-		stocks[9] = new Stock("Old Gravy", Industry.CLOTHING);
+		stocks[0] = new Stock("Mc Doonals", Industry.FOOD);
+		stocks[1] = new Stock("Bugger King", Industry.FOOD);
+		stocks[2] = new Stock("American Beagle", Industry.CLOTHING);
+		stocks[3] = new Stock("Old Gravy", Industry.CLOTHING);
+		stocks[4] = new Stock("Ubysoft", Industry.VIDEOGAMES);
+		stocks[5] = new Stock("Nintenbo", Industry.VIDEOGAMES);
+		stocks[6] = new Stock("Macrosoft", Industry.TECH);
+		stocks[7] = new Stock("Appricot Computing", Industry.TECH);
+		stocks[8] = new Stock("Fedecks", Industry.DELIVERY);	
+		stocks[9] = new Stock("Ikua Furniture", Industry.FURNITURE);
 
 	}
 
@@ -84,9 +84,14 @@ public class Portfolio {
 				messages.add(temp);
 			}
 		}
+		
+		for(int i= 0 ; i< stocks.length; i++){
+			stocks[i].subtractTrendDay();
+		}
 
 		String[] messageArray = new String[messages.size()];
 		messages.toArray(messageArray);
+		
 		
 		return messageArray;
 	}
