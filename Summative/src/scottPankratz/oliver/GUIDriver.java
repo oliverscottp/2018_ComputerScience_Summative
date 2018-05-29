@@ -66,7 +66,8 @@ public class GUIDriver extends Application {
 	 * functions
 	 */
 	public void start(Stage window) throws Exception {
-
+	
+		
 		regenerateEverything();
 		pane.setLeft(listStock);
 
@@ -83,11 +84,12 @@ public class GUIDriver extends Application {
 		pane.setTop(topPane);
 
 		Text news = new Text("News : ");
-		news.setFont(Font.font(30));
+		news.setFont(Font.font(50));
 
 		nxtDay.setFont(Font.font(30));
 		newsBox.getChildren().add(nxtDay);
 		newsBox.getChildren().add(news);
+		
 		nxtDay.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -105,6 +107,7 @@ public class GUIDriver extends Application {
 					Text[] messagesText = new Text[messages.length];
 					for (int i = 0; i < messages.length; i++) {
 						messagesText[i] = new Text();
+						messagesText[i].setFont(Font.font(20));
 						messagesText[i].maxWidth(30);
 						messagesText[i].setText(messages[i]);
 						newsBox.getChildren().add(messagesText[i]);
@@ -180,7 +183,7 @@ public class GUIDriver extends Application {
 
 		pane.setRight(buyAndSellPane);
 
-		Scene scene = new Scene(pane, 1250, 750);
+		Scene scene = new Scene(pane, 1700, 750);
 
 		// The start menu
 		BorderPane mainMenu = new BorderPane();
@@ -202,7 +205,7 @@ public class GUIDriver extends Application {
 
 		mainMenu.setCenter(startButton);
 
-		Scene menu = new Scene(mainMenu, 1250, 750);
+		Scene menu = new Scene(mainMenu, 1700, 750);
 
 		window.setTitle("Stock Game");
 		window.setScene(menu);
