@@ -121,7 +121,7 @@ public class Stock {
 					daysOfTrend = numDays;
 					Portfolio.setStockTrendByIndustry(0.01, industry, numDays, 0, name);
 				} else {
-					returnString = "UH OH, " + name + "\nhas a shortage of shoelaces\npeople are tripping everywhere!";
+					returnString = "UH OH, " + name + "\nhas a shortage of shoelaces\npeople can't tie their shoes!";
 					endOfTrendMessage = name + " has found\nthe shoelaces\nan ex-employee stole them all";
 					trend = -0.02;
 					int numDays = r.nextInt(5) + 3;

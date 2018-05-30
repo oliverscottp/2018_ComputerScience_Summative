@@ -183,7 +183,7 @@ public class GUIDriver extends Application {
 
 		pane.setRight(buyAndSellPane);
 
-		Scene scene = new Scene(pane, 1700, 750);
+		Scene scene = new Scene(pane, 1200, 750);
 
 		// The start menu
 		BorderPane mainMenu = new BorderPane();
