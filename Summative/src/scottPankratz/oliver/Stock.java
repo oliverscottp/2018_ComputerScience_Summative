@@ -89,7 +89,7 @@ public class Stock {
 		if (Math.random() < 0.10 && eventHappening() == false) {
 			if (industry == Industry.TECH) {
 				returnString = "Secuity flaw found in\n" + name;
-				endOfTrendMessage = "The security flaw in " + name + " has been patched";
+				endOfTrendMessage = "The security flaw in\n" + name + "\nhas been patched";
 				trend = -0.04;
 				int numDays = r.nextInt(5) + 2;
 				daysOfTrend = numDays;
@@ -97,15 +97,15 @@ public class Stock {
 
 			} else if (industry == Industry.FOOD) {
 				if (r.nextInt(2) == 0) {
-					returnString = "Disease outbreak!\nmany sick because of " + name + "\nfoot lettuce";
-					endOfTrendMessage = "Food contamination from " + name + " is now under control";
+					returnString = "Disease outbreak!\nmany sick because of\n" + name + "\nfoot lettuce";
+					endOfTrendMessage = "Food contamination from\n" + name + "\nis now under control";
 					endOfTrendPriceChange = 0.03;
 					trend = -0.04;
 					int numDays = r.nextInt(3) + 3;
 					daysOfTrend = numDays;
 					Portfolio.setStockTrendByIndustry(0.03, industry, numDays, 0, name);
 				} else {
-					returnString = name + "\nis offering free food to the homeless";
+					returnString = name + "\nis offering free\nfood to the homeless";
 					endOfTrendMessage = "The free food for homeless by\n" + name + " has ended";
 					endOfTrendPriceChange = -0.05;
 					trend = 0.02;
@@ -114,7 +114,7 @@ public class Stock {
 				}
 			} else if (industry == Industry.CLOTHING) {
 				if (r.nextInt(2) == 0) {
-					returnString = "The CEO of " + name + "\nslipped on a tshirt and broke their neck";
+					returnString = "The CEO of " + name + "\nslipped on a tshirt\nand broke their neck";
 					endOfTrendMessage = "A new CEO for " + name + "\nhas been appointed";
 					trend = -0.03;
 					int numDays = r.nextInt(3) + 2;
@@ -174,13 +174,14 @@ public class Stock {
 					int numDays = r.nextInt(15) + 2;
 					Portfolio.setStockTrendByIndustry(-0.04, Industry.VIDEOGAMES, numDays, 0.17, null);
 				} else if (i == 1) {
-					returnString = "Hackers have hacked into\n" + name + " everybody gains lots of money in game";
-					endOfTrendMessage = name + " has taken back the ingame money,\nplayers are very mad";
-					endOfTrendPriceChange = -0.15;
+					returnString = name + " is giving away 1 of their\ngames for free!\n Many players are playing and\n buying in game items";
+					endOfTrendMessage = name + " no longer is giving away their game for free";
+					endOfTrendPriceChange = -0.05;
 
-					trend = 0.05;
+					trend = 0.04;
 					int numDays = r.nextInt(5) + 3;
 					daysOfTrend = numDays;
+					Portfolio.setStockTrendByIndustry(-0.01, industry, numDays, i, name);
 				}
 			}
 		}

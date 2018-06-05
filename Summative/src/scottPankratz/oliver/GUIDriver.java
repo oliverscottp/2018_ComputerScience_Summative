@@ -13,6 +13,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -48,7 +49,8 @@ public class GUIDriver extends Application {
 	private Text amtOfStockOwned = new Text();
 
 	private HBox newsBox = new HBox(15);
-
+	private ScrollPane scrollPane = new ScrollPane();
+	private HBox newsText = new HBox(15);
 	// Button to go to the next day
 	private Button nxtDay = new Button("Next day");
 
@@ -89,7 +91,9 @@ public class GUIDriver extends Application {
 		nxtDay.setFont(Font.font(30));
 		newsBox.getChildren().add(nxtDay);
 		newsBox.getChildren().add(news);
+		newsBox.setMinHeight(100);
 		
+		nxtDay.setMinWidth(170);
 		nxtDay.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -99,10 +103,10 @@ public class GUIDriver extends Application {
 					currentDay++;
 					regenerateEverything();
 
-					newsBox = new HBox(15);
+					newsText = new HBox(15);
 
-					newsBox.getChildren().add(nxtDay);
-					newsBox.getChildren().add(news);
+					//newsText.getChildren().add(nxtDay);
+					//newsText.getChildren().add(news);
 
 					Text[] messagesText = new Text[messages.length];
 					for (int i = 0; i < messages.length; i++) {
@@ -110,14 +114,17 @@ public class GUIDriver extends Application {
 						messagesText[i].setFont(Font.font(20));
 						messagesText[i].maxWidth(30);
 						messagesText[i].setText(messages[i]);
-						newsBox.getChildren().add(messagesText[i]);
+						newsText.getChildren().add(messagesText[i]);
 					}
-					pane.setBottom(newsBox);
+					scrollPane.setContent(newsText);
+					//pane.setBottom(scrollPane);
 
 				}
 			}
 		});
-
+		scrollPane.setStyle("-fx-background-color:orange;");
+		scrollPane.setContent(newsText);
+		newsBox.getChildren().add(scrollPane);
 		pane.setBottom(newsBox);
 
 		BorderPane nameAndAmt = new BorderPane();
