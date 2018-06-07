@@ -1,7 +1,15 @@
 package scottPankratz.oliver;
 
 import java.util.Random;
-
+/**
+ * holds a single stock, the stock will update it's price when is called to go to the next day.
+ * Has random events that can happen to it which will change its price up or down for the next
+ * random number of days.
+ * keeps a price history.
+ * can return all needed information of the stock
+ * @author Oliver Scott Pankratz
+ *
+ */
 public class Stock {
 	private String name;
 
@@ -71,6 +79,9 @@ public class Stock {
 		daysOfTrend = days;
 	}
 
+	/**
+	 * subtracts a day from the time left in the trend
+	 */
 	public void subtractTrendDay() {
 		if (daysOfTrend >= 1)
 			daysOfTrend--;
@@ -169,7 +180,6 @@ public class Stock {
 					returnString = "A new study has come out showing\na strong link between\nvideogames and animal torture";
 					endOfTrendMessage = "The videogame study has\nbeen proven false";
 					endOfTrendPriceChange = 0.17;
-					System.out.println("CALLED BY " + name);
 					trend = -0.04;
 					int numDays = r.nextInt(15) + 2;
 					Portfolio.setStockTrendByIndustry(-0.04, Industry.VIDEOGAMES, numDays, 0.17, null);
@@ -181,17 +191,14 @@ public class Stock {
 					trend = 0.04;
 					int numDays = r.nextInt(5) + 3;
 					daysOfTrend = numDays;
-					Portfolio.setStockTrendByIndustry(-0.01, industry, numDays, i, name);
+					Portfolio.setStockTrendByIndustry(-0.01, industry, numDays, 0, name);
 				}
 			}
 		}
 
 		price = price * ((((double) (r.nextInt(10001))) / 1000 + 95) / 100 + trend);
 
-		/*
-		 * if(Math.random() < 0.15 && eventHappening() == false) { if(industry ==
-		 * Industry.FURNITURE) }
-		 */
+	
 
 		if (daysOfTrend == 1) {
 
@@ -210,7 +217,7 @@ public class Stock {
 			priceHistory[day] = price;
 		}
 
-		System.out.println(name + " days of trend " + daysOfTrend + " trend : " + trend);
+		
 
 		return returnString;
 	}

@@ -23,6 +23,13 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+/**
+ * The driver Class, creates all the javafx elements and gives them functions, creates a portfolio object to 
+ * keep track of stocks
+ * keeps track of the current day and updates everything when the day is increased
+ * @author Oliver Scott Pankratz
+ *
+ */
 public class GUIDriver extends Application {
 
 	public static int maxDays = 50;
@@ -59,6 +66,11 @@ public class GUIDriver extends Application {
 
 	private int currentDay = 0;
 
+	
+	/**
+	 * Main method, launches the GUI
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -69,14 +81,15 @@ public class GUIDriver extends Application {
 	 */
 	public void start(Stage window) throws Exception {
 	
-		
+		//Generates buttons and other basic things
 		regenerateEverything();
+		
 		pane.setLeft(listStock);
 
 		// Top of main pane
-		titleText.setText("Stock Game");
+		titleText.setText("Stock Game - Day "+(currentDay+1));
 		titleText.setFont(Font.font(60));
-
+		//Displays money and total value of portfolio
 		topPane.setLeft(titleText);
 		infoPane.add(new Text("Money : "), 0, 0);
 		infoPane.add(money, 1, 0);
@@ -85,6 +98,7 @@ public class GUIDriver extends Application {
 		topPane.setRight(infoPane);
 		pane.setTop(topPane);
 
+		//Addingthe box and scroll pane which shows the news for the day
 		Text news = new Text("News : ");
 		news.setFont(Font.font(50));
 
@@ -93,10 +107,15 @@ public class GUIDriver extends Application {
 		newsBox.getChildren().add(news);
 		newsBox.setMinHeight(100);
 		
+		//Making it so the user can go to the next day
 		nxtDay.setMinWidth(170);
+		
+		
 		nxtDay.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
+
+				
 				if (currentDay < maxDays - 1) {
 
 					String[] messages = portfolio.goToNextDay();
@@ -105,9 +124,7 @@ public class GUIDriver extends Application {
 
 					newsText = new HBox(15);
 
-					//newsText.getChildren().add(nxtDay);
-					//newsText.getChildren().add(news);
-
+					
 					Text[] messagesText = new Text[messages.length];
 					for (int i = 0; i < messages.length; i++) {
 						messagesText[i] = new Text();
@@ -117,9 +134,14 @@ public class GUIDriver extends Application {
 						newsText.getChildren().add(messagesText[i]);
 					}
 					scrollPane.setContent(newsText);
-					//pane.setBottom(scrollPane);
+					
 
 				}
+				else{
+					titleText.setText("Gameover, your total value is : "+portfolio.totalWorth()); 
+				
+				}
+				
 			}
 		});
 		scrollPane.setStyle("-fx-background-color:orange;");
@@ -127,6 +149,7 @@ public class GUIDriver extends Application {
 		newsBox.getChildren().add(scrollPane);
 		pane.setBottom(newsBox);
 
+		//Displays the name of the currently selected stock and how much is owned.
 		BorderPane nameAndAmt = new BorderPane();
 		nameAndAmt.setLeft(currentStockName);
 		nameAndAmt.setRight(amtOfStockOwned);
@@ -247,6 +270,7 @@ public class GUIDriver extends Application {
 	 */
 	private void regenerateEverything() {
 		generateStockButtons();
+		titleText.setText("Stock Game - Day "+(currentDay+1));
 		money.setText(String.valueOf(portfolio.getMoney()));
 		totalValue.setText(String.valueOf(portfolio.totalWorth()));
 		currentStockName.setText(portfolio.getStockName(currentSelectedStock));

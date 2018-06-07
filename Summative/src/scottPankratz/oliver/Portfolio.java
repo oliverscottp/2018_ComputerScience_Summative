@@ -1,7 +1,14 @@
 package scottPankratz.oliver;
 
 import java.util.ArrayList;
-
+/**
+ * keeps information of the stocks currently owned and how many are owned.
+ * Creates all the stock objects and puts them in an array. 
+ * Also holds the amount of money in the portfolio.
+ * Can update the day for all of the stock and return any basic information needed.
+ * @author Oliver Scott Pankratz
+ *
+ */
 public class Portfolio {
 	static int numOfDifferentStocks = 10;
 	private static Stock[] stocks = new Stock[numOfDifferentStocks];
@@ -76,6 +83,11 @@ public class Portfolio {
 		}
 	}
 
+	/**
+	 * updates the day to go to the next day for all of the stock, gets any messages the stocks
+	 * return because of an event and return them in an array of strings
+	 * @return	An array of strings of the news
+	 */
 	public String[] goToNextDay() {
 		ArrayList<String> messages = new ArrayList<String>();
 		for (int i = 0; i < stocks.length; i++) {
